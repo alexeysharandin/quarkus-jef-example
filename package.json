@@ -4,8 +4,8 @@
   "main": "main.js",
   "repository": "https://github.com/alexeysharandin/quarkus-jef-example.git",
   "author": "Alexey Sharandin",
-  "license": "Apache 2.0",
-  "private": false,
+  "license": "Apache License 2.0",
+  "private": true,
   "scripts": {
     "start": "webpack-dev-server --config webpack.dev.js",
     "build": "webpack --config webpack.prod.js"
