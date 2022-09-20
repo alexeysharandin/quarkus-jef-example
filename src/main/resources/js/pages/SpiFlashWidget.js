@@ -1,3 +1,5 @@
+import { mapActions, mapState } from 'vuex'
+
 export default {
     data: () => ({
         loading: false,
@@ -12,8 +14,22 @@ export default {
           clearInterval(this.timer);
     },
     methods: {
+        ...mapActions({
+            loadFlash: 'global/loadData',
+            storeFlash: 'global/storeData',
+            deleteFlash: 'global/deleteData',
+        }),
         fetchGps() {
             this.value += 1;
         },
+        async save() {
+            await this.loadFlash();
+        },
+        async load() {
+            await this.storeFlash();
+        },
+        async del() {
+            await this.deleteFlash();
+        }
     },
 }

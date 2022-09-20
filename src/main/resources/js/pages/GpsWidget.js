@@ -1,10 +1,15 @@
+import { mapActions, mapState } from 'vuex'
+
 export default {
     data: () => ({
-        loading: false,
-        value: 0,
         timer: '',
-        selection: 1,
     }),
+    computed: {
+        ...mapState({
+            longitude: state => state.global.longitude,
+            latitude: state => state.global.latitude,
+        }),
+    },
     created() {
         this.timer = window.setInterval(this.fetchGps, 1000);
     },
@@ -12,8 +17,11 @@ export default {
           clearInterval(this.timer);
     },
     methods: {
-        fetchGps() {
-            this.value += 1;
+        ...mapActions({
+            load: 'global/loadGps'
+        }),
+        async fetchGps() {
+            await this.load();
         },
     },
 }

@@ -1,14 +1,20 @@
+import { mapActions } from 'vuex'
+
 export default {
     data: () => ({
-        loading: false,
-        selection: 1,
+        status: false,
     }),
     methods: {
-        on() {
-            console.log("on");
+        ...mapActions({
+            change: 'global/updateGpio'
+        }),
+        async on() {
+            await this.change(true);
+            this.status = true;
         },
-        off() {
-            console.log("off");
+        async off() {
+            await this.change(false);
+            this.status = false;
         }
     },
 }

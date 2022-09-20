@@ -1,8 +1,15 @@
 <template>
-    <v-card class="mx-auto my-12" max-width="250" :loading="loading" height="100%">
+    <v-card class="mx-auto my-12" max-width="230" height="100%">
         <v-img height="200" src="/led.png"></v-img>
         <v-card-title>GPIO</v-card-title>
-        <v-card-text>Enable or disable light</v-card-text>
+        <v-card-text>
+            <v-row>
+                <v-col>Enable or disable LED</v-col>
+            </v-row>
+            <v-row>
+                <v-col>status {{status}}</v-col>
+            </v-row>
+        </v-card-text>
         <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn icon @click="on">

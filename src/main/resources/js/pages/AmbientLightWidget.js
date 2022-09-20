@@ -1,10 +1,15 @@
+import { mapActions, mapState } from 'vuex'
+
 export default {
     data: () => ({
-        loading: false,
-        value: 0,
+        value: '',
         timer: '',
-        selection: 1,
     }),
+    computed: {
+        ...mapState({
+            lux: state => state.global.lux,
+        }),
+    },
     created() {
         this.timer = window.setInterval(this.fetchLight, 1000);
     },
@@ -12,8 +17,11 @@ export default {
           clearInterval(this.timer);
     },
     methods: {
-        fetchLight() {
-            this.value += 1;
+        ...mapActions({
+            load: 'global/loadLux'
+        }),
+        async fetchLight() {
+            await this.load();
         },
     },
 }

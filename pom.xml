@@ -46,8 +46,17 @@
             <artifactId>quarkus-cache</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.jboss.logmanager</groupId>
+            <artifactId>log4j2-jboss-logmanager</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.quarkiverse.jef</groupId>
             <artifactId>quarkus-java-embedded-framework</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.jef</groupId>
+            <artifactId>device-library</artifactId>
             <version>0.0.1</version>
         </dependency>
         <dependency>

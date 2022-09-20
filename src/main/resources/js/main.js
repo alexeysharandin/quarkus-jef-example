@@ -10,10 +10,12 @@ import 'regenerator-runtime/runtime';
 import 'plugins/axios'
 import 'plugins/logger'
 
+import store from 'plugins/store'
 import App from 'pages/Application.vue'
 
 new Vue({
     el: '#app',
     vuetify,
+    store,
     render: a => a(App)
 })
