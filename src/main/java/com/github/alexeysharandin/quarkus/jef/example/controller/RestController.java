@@ -65,8 +65,8 @@ public class RestController {
 
     @DELETE
     @Path("flash")
-    public Response delete() throws IOException {
+    public StateDTO delete() throws IOException {
         flash.delete();
-        return Response.ok().build();
+        return StateDTO.empty();
     }
 }

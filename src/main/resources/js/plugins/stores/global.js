@@ -73,9 +73,6 @@ const actions = {
         }
     },
     async storeData({commit, state}) {
-        var obj = {
-        }
-
         const response = await http.store(state);
         if (response) {
             const data = await response.data;
