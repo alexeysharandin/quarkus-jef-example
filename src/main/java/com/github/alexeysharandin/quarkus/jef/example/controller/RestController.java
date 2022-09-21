@@ -3,8 +3,9 @@ package com.github.alexeysharandin.quarkus.jef.example.controller;
 import com.github.alexeysharandin.quarkus.jef.example.model.Bmp280DTO;
 import com.github.alexeysharandin.quarkus.jef.example.model.GpsDTO;
 import com.github.alexeysharandin.quarkus.jef.example.model.StateDTO;
-import com.github.alexeysharandin.quarkus.jef.example.services.*;
-import io.smallrye.mutiny.Uni;
+import com.github.alexeysharandin.quarkus.jef.example.services.FlashService;
+import com.github.alexeysharandin.quarkus.jef.example.services.GpioService;
+import com.github.alexeysharandin.quarkus.jef.example.services.ScheduledService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -17,36 +18,30 @@ import java.io.IOException;
 @Consumes(MediaType.APPLICATION_JSON)
 public class RestController {
     @Inject
-    BH1750Service light;
-
-    @Inject
-    Neo6mService gps;
-
-    @Inject
-    Bmp280Service bmp280;
-
-    @Inject
     GpioService gpio;
+
+    @Inject
+    ScheduledService scheduled;
 
     @Inject
     FlashService flash;
 
     @GET
     @Path("light")
-    public Uni<Float> light() throws IOException {
-        return Uni.createFrom().item(light.value());
+    public Float light() throws IOException {
+        return scheduled.light();
     }
 
     @GET
     @Path("gps")
-    public Uni<GpsDTO> gps() {
-        return Uni.createFrom().item(gps.coords());
+    public GpsDTO gps() {
+        return scheduled.coords();
     }
 
     @GET
     @Path("bmp280")
-    public Uni<Bmp280DTO> bmp280() throws IOException {
-        return Uni.createFrom().item(bmp280.data());
+    public Bmp280DTO bmp280() throws IOException {
+        return scheduled.data();
     }
 
     @GET

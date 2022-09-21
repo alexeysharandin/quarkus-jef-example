@@ -24,7 +24,7 @@ public class BH1750Service {
     void init() throws IOException {
         logger.info("Init BH1750 device");
         sensor = new BH1750FVI(bus, BH1750FVI.I2CAddress.I2C_ADDRESS_1);
-        logger.info("Done");
+        logger.info("BH1750 Done");
     }
 
     public float value() throws IOException {

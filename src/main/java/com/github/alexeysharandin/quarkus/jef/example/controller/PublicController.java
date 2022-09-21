@@ -10,32 +10,36 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.net.ServerSocket;
 
 @Path("")
 public class PublicController {
-    private final static String FILE_NAME = "main.js";
-    private final static String DEV_PATH = "http://localhost:7001/" + FILE_NAME;
-    private final static String PROD_PATH = "/js/" + FILE_NAME;
+
+    private final static Integer UI_DEBUG_PORT = 7001;
+    private final static String PATH = "js/";
     @Inject
     Template index;
 
 
     @ConfigProperty(name="quarkus.http.port")
-    String port;
+    Integer port;
 
     @GET
     @Produces(MediaType.TEXT_HTML)
     public TemplateInstance get() {
         TemplateInstance instance = index.instance();
-
         LaunchMode current = LaunchMode.current();
-        String url;
+        String path;
+        Integer currentPort;
         if(current.isDevOrTest()) {
-            url = DEV_PATH;
+            currentPort = UI_DEBUG_PORT;
+            path = "";
         } else {
-            url = PROD_PATH;
+            currentPort = port;
+            path = PATH;
         }
-        instance.data("url", url);
+        instance.data("port", currentPort);
+        instance.data("path", path);
         return instance;
     }
 

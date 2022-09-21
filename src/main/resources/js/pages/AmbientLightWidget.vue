@@ -5,7 +5,7 @@
         <v-card-text>
             <v-row align="center" class="mx-0">
                 <v-col cols="4">Light:</v-col>
-                <v-col>{{lux}} lux</v-col>
+                <v-col>{{lux.toFixed(2)}} lux</v-col>
             </v-row>
         </v-card-text>
     </v-card>

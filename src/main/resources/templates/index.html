@@ -9,6 +9,13 @@
 </head>
 <body>
 <div id="app"></div>
-<script type="text/javascript" src="{url}"></script>
+<script>
+    const script = document.createElement('script');
+    const scriptSrc = (window.location.protocol + '//' +
+                   window.location.hostname +
+                   ':{port}/{path}main.js');
+    script.setAttribute('src', scriptSrc);
+    document.body.appendChild(script);
+</script>
 </body>
 </html>

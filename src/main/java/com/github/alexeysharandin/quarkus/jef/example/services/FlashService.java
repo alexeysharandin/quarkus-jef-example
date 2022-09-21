@@ -37,7 +37,7 @@ public class FlashService {
         logger.info("capacity = 0x" + Integer.toHexString(capacity));
         logger.info("chipID = " + chipID);
         logger.info("busy = " + busy);
-        logger.info("Done");
+        logger.info("W25xFlash Done");
     }
 
     public StateDTO load() throws IOException {
