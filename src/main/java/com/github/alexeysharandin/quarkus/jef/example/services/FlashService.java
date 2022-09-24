@@ -13,6 +13,8 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.util.Arrays;
 
 @ApplicationScoped
 public class FlashService {
@@ -42,7 +44,7 @@ public class FlashService {
 
     public StateDTO load() throws IOException {
         StateDTO dto = new StateDTO();
-        ByteBuffer read = flash.read(0, StateDTO.SIZE);
+        ByteBuffer read = flash.fastRead(0, StateDTO.SIZE);
         dto.lux = read.getFloat();
         dto.gpio = read.get() == 1;
         dto.longitude = read.getDouble();
@@ -50,6 +52,12 @@ public class FlashService {
         dto.pressure = read.getDouble();
         dto.temperature = read.getDouble();
         dto.altitude = read.getDouble();
+        if(logger.isInfoEnabled()) {
+            byte[] array = new byte[StateDTO.SIZE];
+            read.position(0);
+            read.get(array);
+            logger.info("Read array from SPI flash {}", dump(array));
+        }
         return dto;
     }
 
@@ -62,10 +70,30 @@ public class FlashService {
         buf.putDouble(dto.pressure);
         buf.putDouble(dto.temperature);
         buf.putDouble(dto.altitude);
-        flash.pageWrite(0, 0, buf.array());
+        byte[] array = buf.array();
+        logger.info("Write array to SPI flash {}", dump(array));
+        flash.eraseSector(0);
+        flash.pageWrite(0, 0, array);
     }
 
     public void delete() throws IOException {
-        flash.pageWrite(0, 0, new byte[StateDTO.SIZE]);
+        flash.eraseSector(0);
+    }
+
+    public String dump(byte[] bytes) {
+        StringBuilder result = new StringBuilder();
+        for(int i = 0; i<bytes.length;i++) {
+            if(i==0) {
+                result.append("[");
+                result.append(String.format("%02x", bytes[i]));
+            } else if(i==bytes.length-1) {
+                result.append(String.format("%02x", bytes[i]));
+                result.append("]");
+            } else {
+                result.append(String.format("%02x", bytes[i]));
+                result.append("-");
+            }
+        }
+        return result.toString();
     }
 }

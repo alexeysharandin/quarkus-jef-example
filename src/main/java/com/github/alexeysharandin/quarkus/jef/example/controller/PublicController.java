@@ -16,7 +16,7 @@ import java.net.ServerSocket;
 public class PublicController {
 
     private final static Integer UI_DEBUG_PORT = 7001;
-    private final static String PATH = "js/";
+    private final static String PATH = "";
     @Inject
     Template index;
 
